@@ -1,0 +1,6 @@
+#!/home/salim/.nvm/versions/node/v18.12.1/bin/node
+
+console.log("salam")
+
+
+//which node
