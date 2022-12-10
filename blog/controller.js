@@ -1,17 +1,11 @@
-function home (req, res) {
+export function home (req, res) {
   res.send('Home Page')
 }
 
-function about (req, res) {
+export function about (req, res) {
   res.send('About us')
 }
 
-function contact (req, res) {
+export function contact (req, res) {
   res.send('Contact us')
-}
-
-module.exports = {
-  home,
-  about,
-  contact
 }
