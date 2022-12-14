@@ -6,15 +6,15 @@ export function home (req, res) {
 }
 
 export function about (req, res) {
-  res.render('index', {
+  res.render('about', {
     title: 'About us',
     content: 'This is About us page'
   })
 }
 
 export function contact (req, res) {
-  res.render('index', {
+  res.render('contact', {
     title: 'Contact us',
-    content: 'This is About us page'
+    content: 'This is Contact us page'
   })
 }

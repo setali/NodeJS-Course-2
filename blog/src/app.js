@@ -1,5 +1,4 @@
 import path from 'path'
-import fs from 'fs'
 import express from 'express'
 import router from './routes/index.js'
 import errorHandler from './middlewares/error-handler'
@@ -9,7 +8,7 @@ const app = express()
 app.use(express.static('public'))
 
 app.set('views', path.resolve(__dirname, 'views'))
-app.set('view engine', 'pug')
+app.set('view engine', 'ejs')
 
 const port = 8080
 
