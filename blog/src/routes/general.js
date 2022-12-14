@@ -1,4 +1,4 @@
-import { home, about, contact } from './controller'
+import { home, about, contact } from '../controllers/general'
 import express from 'express'
 
 const router = express.Router()
