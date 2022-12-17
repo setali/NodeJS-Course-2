@@ -1,9 +1,36 @@
 <%- include("../../layouts/admin-top.js") %>
 
-<p>
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem distinctio,
-  commodi itaque earum sunt a esse quo iure eos porro pariatur perferendis
-  doloremque delectus aliquid nobis sed voluptatibus, quasi ipsum?
-</p>
+<div>
+  <a class="action" href="/admin/article/create">Add Article</a>
+  <div class="list-items">
+    <table>
+      <thead>
+        <tr>
+          <td>ID</td>
+          <td>Title</td>
+          <td>Actions</td>
+        </tr>
+      </thead>
+      <tbody>
+        <% for (const article of articles) { %>
+        <tr>
+          <td><%= article.id %></td>
+          <td><%= article.title %></td>
+          <td>
+            <a class="action inline" href="/admin/article/<%= article.id %>"
+              >Show</a
+            >
+            <a
+              class="action inline"
+              href="/admin/article/<%= article.id %>/edit"
+              >Edit</a
+            >
+          </td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
 
 <%- include("../../layouts/admin-bottom.js") %>

@@ -1,0 +1,39 @@
+.form-item {
+  margin: 1rem;
+}
+
+button {
+  padding: 0.2rem 1rem;
+}
+
+.list-items {
+  margin: 2rem 1rem;
+}
+
+table,
+th,
+td {
+  border: 1px solid;
+}
+
+table {
+  width: 100%;
+}
+
+a.action {
+  color: blue;
+  text-decoration: underline;
+  display: block;
+}
+
+a.action.inline {
+  display: inline;
+}
+
+.article .row .label {
+  font-weight: bold;
+}
+
+.article .row .content {
+  padding: 0.5rem;
+}

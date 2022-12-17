@@ -1,0 +1,26 @@
+<%- include("../../layouts/admin-top.js") %>
+
+<div class="article">
+  <div class="row">
+    <div class="label">ID</div>
+    <div class="content"><%= article.id %></div>
+  </div>
+  <div class="row">
+    <div class="label">Title</div>
+    <div class="content"><%= article.title %></div>
+  </div>
+  <div class="row">
+    <div class="label">Text</div>
+    <p class="content"><%= article.text %></p>
+  </div>
+
+  <hr />
+
+  <a class="action" href="/admin/article/<%= article.id %>/edit"
+    >Edit article</a
+  >
+
+  <a href="/admin/article" class="action">Back to list</a>
+</div>
+
+<%- include("../../layouts/admin-bottom.js") %>
