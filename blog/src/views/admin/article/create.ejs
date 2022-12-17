@@ -1,0 +1,17 @@
+<%- include("../../layouts/admin-top.js") %>
+
+<form action="/admin/article" method="POST">
+  <div class="form-item">
+    <label for="title">Title</label>
+    <input type="text" name="title" />
+  </div>
+  <div class="form-item">
+    <label for="text">Text</label>
+    <textarea name="text" cols="30" rows="5"></textarea>
+  </div>
+  <div class="item-form">
+    <button type="submit">Save</button>
+  </div>
+</form>
+
+<%- include("../../layouts/admin-bottom.js") %>
