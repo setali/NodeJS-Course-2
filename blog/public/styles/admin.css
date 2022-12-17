@@ -20,13 +20,13 @@ table {
   width: 100%;
 }
 
-a.action {
+.action {
   color: blue;
   text-decoration: underline;
   display: block;
 }
 
-a.action.inline {
+.action.inline {
   display: inline;
 }
 
@@ -36,4 +36,15 @@ a.action.inline {
 
 .article .row .content {
   padding: 0.5rem;
+}
+
+.action-form {
+  display: inline;
+}
+
+button.action {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
 }

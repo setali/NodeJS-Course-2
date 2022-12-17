@@ -25,6 +25,8 @@
               href="/admin/article/<%= article.id %>/edit"
               >Edit</a
             >
+
+            <%- include("../../includes/article-delete-form.ejs", {article}) %>
           </td>
         </tr>
         <% } %>

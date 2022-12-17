@@ -10,6 +10,7 @@ router.get('/create', ArticleController.create)
 router.post('/', ArticleController.add)
 router.get('/:id(\\d+)/edit', ArticleController.edit)
 router.put('/:id(\\d+)', ArticleController.update)
+router.delete('/:id(\\d+)', ArticleController.remove)
 
 export default router
 
