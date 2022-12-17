@@ -1,4 +1,9 @@
+import { NotFoundError, BadRequestError } from '../utils/errors'
+
 export function home (req, res) {
+  console.log(ali)
+  // throw new BadRequestError()
+
   res.render('index', {
     title: 'Home Page',
     content: 'This is homepage'
