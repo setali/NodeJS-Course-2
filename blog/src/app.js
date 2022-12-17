@@ -3,12 +3,14 @@ import express from 'express'
 import router from './routes/index.js'
 import errorHandler from './middlewares/error-handler'
 import dotenv from 'dotenv'
+import bodyParser from 'body-parser'
 
 dotenv.config()
 
 const app = express()
 
 app.use(express.static('public'))
+app.use(bodyParser.urlencoded({ extended: true }))
 
 app.set('views', path.resolve(__dirname, 'views'))
 app.set('view engine', 'ejs')
