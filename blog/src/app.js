@@ -4,8 +4,9 @@ import router from './routes'
 import errorHandler from './middlewares/error-handler'
 import bodyParser from 'body-parser'
 import overrideMethod from './middlewares/override-method'
+import { sequelize } from './config/database'
 
-export function bootstrap () {
+export async function bootstrap () {
   const app = express()
 
   app.use(express.static('public'))
@@ -16,6 +17,9 @@ export function bootstrap () {
   app.set('view engine', 'ejs')
 
   const port = 8080
+
+  await sequelize.authenticate()
+  await sequelize.sync()
 
   app.use(router)
 
