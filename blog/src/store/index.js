@@ -1,13 +1,20 @@
-import fs from 'fs'
-import path from 'path'
+import mysql from 'mysql2'
 
-const store = {}
+const connection = mysql.createConnection({
+  host: '127.0.0.1',
+  port: 3302,
+  user: 'root',
+  password: '123456',
+  database: 'blog'
+})
+
+connection.connect()
 
 export class BaseModel {
   constructor ({ id, ...params }) {
     this.id = id
 
-    this.fields.forEach(field => {
+    this.fieldNames.forEach(field => {
       this[field] = params[field]
     })
   }
@@ -16,40 +23,31 @@ export class BaseModel {
     return this.constructor.fields
   }
 
+  get fieldNames () {
+    return this.fields.map(field => field.name)
+  }
+
   get entityName () {
     return this.constructor.entityName
   }
 
-  static get data () {
-    return getData(this.entityName)
-  }
-
-  get data () {
-    return getData(this.entityName)
-  }
-
   save () {
-    const data = this.data
+    const q = this.id
+      ? `UPDATE ${this.entityName} SET ${this.fieldNames
+          .map(
+            name =>
+              `${name} = ${
+                this[name] === undefined ? 'NULL' : `'${this[name]}'`
+              }`
+          )
+          .join(', ')} WHERE id = ${this.id}`
+      : `INSERT INTO ${this.entityName} (${this.fieldNames.join(
+          ', '
+        )}) VALUES (${this.fieldNames
+          .map(name => (this[name] === undefined ? 'NULL' : `'${this[name]}'`))
+          .join(', ')})`
 
-    if (this.id) {
-      const entity = data.find(el => el.id === this.id)
-
-      this.fields.forEach(field => {
-        entity[field] = this[field]
-      })
-    } else {
-      const entity = {
-        id: this.generateId()
-      }
-
-      this.fields.forEach(field => {
-        entity[field] = this[field]
-      })
-
-      data.push(entity)
-    }
-
-    saveData(this.entityName, data)
+    return query(q)
   }
 
   generateId () {
@@ -57,56 +55,54 @@ export class BaseModel {
   }
 
   static findAll () {
-    return this.data
+    return query(`SELECT * FROM ${this.entityName}`)
   }
 
-  static find (id) {
-    const data = this.data.find(el => el.id === id)
+  static async find (id) {
+    const data = await query(
+      `SELECT * FROM ${this.entityName} WHERE id = ${id}`
+    )
 
-    return data ? new this(data) : undefined
+    return data[0] ? new this(data[0]) : undefined
   }
 
   static remove (id) {
-    const data = this.data
-    const index = data.findIndex(el => el.id === id)
-
-    if (index >= 0) {
-      data.splice(index, 1)
-      saveData(this.entityName, data)
-    }
+    return query(`DELETE FROM ${this.entityName} WHERE id = ${id}`)
   }
 
   remove () {
     if (this.id) {
-      this.constructor.remove(this.id)
+      return this.constructor.remove(this.id)
     }
   }
 }
 
-export function create (Entity) {
-  const filePath = getFilePath(Entity.entityName)
+function query (q) {
+  return new Promise((resolve, reject) => {
+    connection.query(q, (err, results) => {
+      err ? reject(err) : resolve(results)
+    })
+  })
+}
 
-  if (!fs.existsSync(filePath)) {
-    saveData(Entity.entityName, [])
-  }
+export function create (Entity) {
+  query(`SHOW TABLES LIKE '${Entity.entityName}'`).then(results => {
+    if (results.length === 0) {
+      query(`CREATE TABLE IF NOT EXISTS ${Entity.entityName}
+        (id INT NOT NULL AUTO_INCREMENT, 
+          ${Entity.fields
+            .map(
+              field =>
+                `${field.name} ${field.type} ${
+                  field.nullable ? '' : 'NOT NULL'
+                }`
+            )
+            .join(', ')},
+          PRIMARY KEY (id)
+          );
+      `).then(() => console.log(`${Entity.entityName} table created.`))
+    }
+  })
 
   return Entity
-}
-
-function getFilePath (entityName) {
-  return path.resolve(__dirname, `${entityName}.data`)
-}
-
-function getData (entityName) {
-  const filePath = getFilePath(entityName)
-
-  const data = fs.readFileSync(filePath)
-
-  return JSON.parse(data)
-}
-
-function saveData (entityName, data) {
-  const filePath = getFilePath(entityName)
-
-  fs.writeFileSync(filePath, JSON.stringify(data))
 }
