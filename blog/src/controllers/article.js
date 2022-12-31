@@ -2,8 +2,8 @@ import Article from '../models/article'
 import { NotFoundError } from '../utils/errors'
 
 class ArticleController {
-  list (req, res) {
-    const articles = Article.findAll()
+  async list (req, res) {
+    const articles = await Article.findAll()
 
     res.render('article/list', {
       title: 'Articles',
@@ -11,10 +11,10 @@ class ArticleController {
     })
   }
 
-  get (req, res) {
+  async get (req, res) {
     const { id } = req.params
 
-    const article = Article.find(+id)
+    const article = await Article.find(+id)
 
     if (!article) {
       throw new NotFoundError('Article not found')
