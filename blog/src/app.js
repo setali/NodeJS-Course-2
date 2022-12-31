@@ -1,3 +1,4 @@
+import 'express-async-errors'
 import path from 'path'
 import express from 'express'
 import router from './routes/index.js'
