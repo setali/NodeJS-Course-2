@@ -1,0 +1,22 @@
+<%- include("../layouts/main-top.js") %>
+
+
+<div>
+    <form action="/login" method="POST">
+        <div class="form-item">
+          <label for="username">Username</label>
+          <input type="text" name="username" />
+        </div>
+        <div class="form-item">
+          <label for="password">Password</label>
+          <input name="password" />
+        </div>
+        <div class="form-item">
+          <button type="submit">Login</button>
+        </div>
+    </form>
+</div>
+
+
+
+<%- include("../layouts/main-bottom.js") %>

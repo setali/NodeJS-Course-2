@@ -7,6 +7,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="/styles/main.css" />
     <link rel="stylesheet" href="/styles/admin.css" />
+    <link rel="stylesheet" href="/styles/form.css" />
   </head>
   <body>
     <div class="container">
