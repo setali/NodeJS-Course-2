@@ -2,4 +2,19 @@
 
 <p><%= content %></p>
 
+<div>
+  <h3>Last Articles</h3>
+  <div>
+    <% for (const article of articles) { %>
+    <div>
+      <a href="/article/<%= article.id %>"> <%= article.title %> </a>
+    </div>
+    <% } %>
+  </div>
+
+  <div>
+    <a href="/article"> View All Articles </a>
+  </div>
+</div>
+
 <%- include("./layouts/main-bottom.js") %>

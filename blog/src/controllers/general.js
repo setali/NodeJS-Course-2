@@ -1,9 +1,13 @@
 import { NotFoundError, BadRequestError } from '../utils/errors'
+import Article from '../models/article'
 
-export function home (req, res) {
+export async function home (req, res) {
+  const articles = await Article.findAll({ limit: 3, order: [['id', 'desc']] })
+
   res.render('index', {
     title: 'Home Page',
     content: 'This is homepage',
+    articles,
     user: req.user
   })
 }

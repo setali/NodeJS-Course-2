@@ -37,7 +37,8 @@ export async function bootstrap () {
   app.use(auth)
 
   await sequelize.authenticate()
-  await sequelize.sync({ alter: true })
+  await sequelize.sync()
+  // await sequelize.sync({ alter: true })
 
   app.use(router)
 
