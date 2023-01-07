@@ -7,7 +7,8 @@ class ArticleController {
 
     res.render('article/list', {
       title: 'Articles',
-      articles
+      articles,
+      user: req.user
     })
   }
 
@@ -22,7 +23,8 @@ class ArticleController {
 
     res.render('article/show', {
       title: article.title,
-      article
+      article,
+      user: req.user
     })
   }
 }

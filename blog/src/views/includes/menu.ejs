@@ -13,8 +13,13 @@
   </div>
   <div class="menu">
     <ul>
+      <% if (locals.user) { %>
+      <li><%= user.username %></li>
+      <li><a href="/logout" class="action logout">logout</a></li>
+      <% } else { %>
       <li><a href="/login">Login</a></li>
       <li><a href="/register">Register</a></li>
+      <% } %>
     </ul>
   </div>
 </header>

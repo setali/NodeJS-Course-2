@@ -10,6 +10,7 @@ export default (err, req, res, next) => {
 
   res.status(status).render('error', {
     title: `Error: ${status}`,
-    content: message
+    content: message,
+    user: req.user
   })
 }

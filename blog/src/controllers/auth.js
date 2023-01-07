@@ -10,12 +10,20 @@ class AuthController {
   }
 
   loginPage (req, res) {
+    if (req.user) {
+      res.redirect('/')
+    }
+
     res.render('auth/login', {
       title: 'Login'
     })
   }
 
   async login (req, res) {
+    if (req.user) {
+      res.redirect('/')
+    }
+
     const { username, password } = req.body
 
     if (!username || !password) {
@@ -34,16 +42,26 @@ class AuthController {
 
     this.transformUser(user)
 
-    res.json(user)
+    req.session.user = user
+
+    res.redirect('/')
   }
 
   registerPage (req, res) {
+    if (req.user) {
+      res.redirect('/')
+    }
+
     res.render('auth/register', {
       title: 'Register'
     })
   }
 
   async register (req, res) {
+    if (req.user) {
+      res.redirect('/')
+    }
+
     const { username, password, email } = req.body
 
     if (!username || !email || !password) {
@@ -66,7 +84,15 @@ class AuthController {
 
     this.transformUser(user)
 
-    res.json(user)
+    res.redirect('/')
+  }
+
+  logout (req, res) {
+    req.session.destroy(error => {
+      if (!error) {
+        res.redirect(req.headers.referer)
+      }
+    })
   }
 }
 

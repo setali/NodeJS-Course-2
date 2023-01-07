@@ -46,3 +46,7 @@ header {
 footer {
   text-align: center;
 }
+
+.logout {
+  color: red;
+}
