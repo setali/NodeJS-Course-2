@@ -84,7 +84,7 @@ class AuthController {
 
     this.transformUser(user)
 
-    res.redirect('/')
+    res.redirect('/login')
   }
 
   logout (req, res) {

@@ -19,8 +19,8 @@ function logQueries (query) {
 }
 
 export class BaseModel extends Model {
-  static find (id) {
-    return this.findByPk(id)
+  static find (id, options) {
+    return this.findByPk(id, options)
   }
 
   remove () {
