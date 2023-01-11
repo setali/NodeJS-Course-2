@@ -3,12 +3,6 @@ import User from '../models/user'
 import bcrypt from 'bcrypt'
 
 class AuthController {
-  transformUser (user) {
-    user.set('password', undefined)
-
-    return user
-  }
-
   loginPage (req, res) {
     if (req.user) {
       res.redirect('/')
@@ -30,7 +24,9 @@ class AuthController {
       throw new BadRequestError('username and password are required')
     }
 
-    const user = await User.findOne({ where: { username } })
+    const user = await User.scope('withPassword').findOne({
+      where: { username }
+    })
 
     if (!user) {
       throw new BadRequestError('Credential error')
@@ -39,8 +35,6 @@ class AuthController {
     if (!bcrypt.compareSync(password, user.password)) {
       throw new BadRequestError('Credential error')
     }
-
-    this.transformUser(user)
 
     req.session.user = user
 
@@ -81,8 +75,6 @@ class AuthController {
         }
       }
     }
-
-    this.transformUser(user)
 
     res.redirect('/login')
   }
