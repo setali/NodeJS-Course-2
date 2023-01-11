@@ -18,6 +18,7 @@ export async function bootstrap () {
 
   app.use(express.static('public'))
   app.use(bodyParser.urlencoded({ extended: true }))
+  app.use(express.json())
   app.use(overrideMethod)
 
   const redisClient = new Redis(6372)
