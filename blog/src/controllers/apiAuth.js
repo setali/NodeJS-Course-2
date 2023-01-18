@@ -7,10 +7,6 @@ class AuthController {
   async login (req, res) {
     const { username, password } = req.body
 
-    if (!username || !password) {
-      throw new BadRequestError('username and password are required')
-    }
-
     const user = await User.scope('withPassword').findOne({
       where: { username }
     })

@@ -25,10 +25,6 @@ class ArticleController {
   async add (req, res) {
     const { title, text } = req.body
 
-    if (!title || !text) {
-      throw new BadRequestError('Title and text are required')
-    }
-
     const article = new Article({ title, text, userId: req.user.id })
 
     await article.save()
@@ -40,10 +36,6 @@ class ArticleController {
     const { id } = req.params
 
     const { title, text } = req.body
-
-    if (!title || !text) {
-      throw new BadRequestError('Title and text are required')
-    }
 
     const article = await Article.find(+id)
 

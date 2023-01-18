@@ -1,9 +1,11 @@
 import express from 'express'
-import authConstroller from '../../controllers/apiAuth'
+import authController from '../../controllers/apiAuth'
+import { loginSchema as schema } from '../../validators/login'
+import { validate } from 'express-jsonschema'
 
 const router = express.Router()
 
-router.use('/login', authConstroller.login)
-router.use('/user', authConstroller.user)
+router.use('/login', validate(schema), authController.login)
+router.use('/user', authController.user)
 
 export default router

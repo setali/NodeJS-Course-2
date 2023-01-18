@@ -1,13 +1,20 @@
 import express from 'express'
 import ArticleController from '../../../controllers/admin/article'
 import acl from '../../../middlewares/acl'
+import { validate } from 'express-jsonschema'
+import { articleSchema as schema } from '../../../validators/article'
 
 const router = express.Router()
 
 router.get('/', acl('WRITER'), ArticleController.list)
 router.get('/:id(\\d+)', acl('WRITER'), ArticleController.get)
-router.post('/', acl('WRITER'), ArticleController.add)
-router.put('/:id(\\d+)', acl('MODERATOR'), ArticleController.update)
+router.post('/', acl('WRITER'), validate(schema), ArticleController.add)
+router.put(
+  '/:id(\\d+)',
+  acl('MODERATOR'),
+  validate(schema),
+  ArticleController.update
+)
 router.delete('/:id(\\d+)', acl('ADMIN'), ArticleController.remove)
 
 export default router
