@@ -1,20 +1,24 @@
 <%- include("./layouts/main-top.js") %>
 
-<p><%= content %></p>
+<h3>Last Articles</h3>
 
-<div>
-  <h3>Last Articles</h3>
-  <div>
-    <% for (const article of articles) { %>
-    <div>
-      <a href="/article/<%= article.id %>"> <%= article.title %> </a>
+<div class="article-list">
+  <% for (const article of articles) { %>
+  <div class="article">
+    <div
+      class="image"
+      style="background-image: url('<%= article.image %>')"
+    ></div>
+    <div class="detail">
+      <a href="/article/<%= article.id %>"> <h3><%= article.title %></h3></a>
+      <p><%= article.text %></p>
     </div>
-    <% } %>
   </div>
+  <% } %>
+</div>
 
-  <div>
-    <a href="/article"> View All Articles </a>
-  </div>
+<div class="all-article-link">
+  <a href="/article"> View All Articles </a>
 </div>
 
 <%- include("./layouts/main-bottom.js") %>

@@ -3,7 +3,7 @@ import { NotFoundError } from '../utils/errors'
 
 class ArticleController {
   async list (req, res) {
-    const data = await Article.findPaginate(req.query.page, { limit: 4 })
+    const data = await Article.findPaginate(req.query.page, { limit: 8 })
 
     res.render('article/list', {
       title: 'Articles',

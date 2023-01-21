@@ -23,9 +23,9 @@ class ArticleController {
   }
 
   async add (req, res) {
-    const { title, text } = req.body
+    const { title, text, image } = req.body
 
-    const article = new Article({ title, text, userId: req.user.id })
+    const article = new Article({ title, text, image, userId: req.user.id })
 
     await article.save()
 
@@ -35,7 +35,7 @@ class ArticleController {
   async update (req, res) {
     const { id } = req.params
 
-    const { title, text } = req.body
+    const { title, text, image } = req.body
 
     const article = await Article.find(+id)
 
@@ -45,6 +45,7 @@ class ArticleController {
 
     article.title = title
     article.text = text
+    article.image = image
 
     await article.save()
 

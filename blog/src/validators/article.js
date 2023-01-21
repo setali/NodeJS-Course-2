@@ -11,6 +11,11 @@ export const articleSchema = {
       text: {
         type: 'string',
         required: true
+      },
+      image: {
+        type: 'string',
+        required: true,
+        maxLength: 255
       }
     }
   }

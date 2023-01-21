@@ -1,9 +1,15 @@
 <%- include("../layouts/main-top.js") %>
 
-<p><%= article.text %></p>
+<div class="article-full">
+  <div class="image">
+    <img src="/<%= article.image %>" />
+  </div>
+
+  <p><%= article.text %></p>
+</div>
 
 <div>
-  <a href="/article">Back to list</a>
+  <a class="action" href="/article">Back to list</a>
 </div>
 
 <%- include("../layouts/main-bottom.js") %>
