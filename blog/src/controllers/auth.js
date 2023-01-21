@@ -1,6 +1,7 @@
 import { BadRequestError } from '../utils/errors'
 import User from '../models/user'
 import bcrypt from 'bcrypt'
+import log from '../utils/logger'
 
 class AuthController {
   loginPage (req, res) {
@@ -36,7 +37,11 @@ class AuthController {
       throw new BadRequestError('Credential error')
     }
 
+    delete user.set('password', undefined)
+
     req.session.user = user
+
+    log({ message: 'user:login', metadata: { user } })
 
     res.redirect('/')
   }

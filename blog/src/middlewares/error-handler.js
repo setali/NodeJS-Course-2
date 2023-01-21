@@ -1,4 +1,5 @@
 import { JsonSchemaValidation } from 'express-jsonschema'
+import log from '../utils/logger'
 
 export default (err, req, res, next) => {
   console.log(err.message)
@@ -17,6 +18,12 @@ export default (err, req, res, next) => {
     status < 500 || process.env.NODE_ENV === 'development'
       ? err.message
       : 'Server Error, Please call to admin'
+
+  log({
+    level: 'error',
+    message: err.message,
+    metadata: { user: req.user, url: req.url, status }
+  })
 
   if (req.url.startsWith('/api')) {
     res.status(status).json({
