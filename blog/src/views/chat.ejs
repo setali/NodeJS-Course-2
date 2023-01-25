@@ -1,0 +1,18 @@
+<%- include("./layouts/chat-top.js") %>
+
+<div class="chat-box">
+  <div class="user-list" id="users"></div>
+
+  <div class="message-box">
+    <div class="message-list-wrapper" id="message-list-wrapper"></div>
+
+    <div class="message-form">
+      <form id="chat-form">
+        <input type="text" id="chat-input" />
+        <button>Send</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include("./layouts/main-bottom.js") %>

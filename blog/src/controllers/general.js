@@ -27,3 +27,10 @@ export function contact (req, res) {
     user: req.user
   })
 }
+
+export function chat (req, res) {
+  res.render('chat', {
+    title: 'Chatroom',
+    user: req.user
+  })
+}

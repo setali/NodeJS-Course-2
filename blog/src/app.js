@@ -9,6 +9,9 @@ import session from 'express-session'
 import connectRedis from 'connect-redis'
 import Redis from 'ioredis'
 import auth from './middlewares/auth'
+import socketIO from 'socket.io'
+import http from 'http'
+import chatApp from './chat'
 
 export async function bootstrap () {
   const app = express()
@@ -27,13 +30,13 @@ export async function bootstrap () {
 
   const store = new RedisStore({ client: redisClient })
 
-  app.use(
-    session({
-      store,
-      secret: process.env.SECRET,
-      resave: false
-    })
-  )
+  const sessionMiddleware = session({
+    store,
+    secret: process.env.SECRET,
+    resave: false
+  })
+
+  app.use(sessionMiddleware)
 
   app.use(auth)
 
@@ -47,7 +50,21 @@ export async function bootstrap () {
 
   const port = process.env.PORT
 
-  app.listen(port, () => {
+  const server = http.createServer(app)
+
+  const io = new socketIO.Server(server)
+
+  io.use((socket, next) => {
+    sessionMiddleware(socket.request, {}, next)
+  })
+
+  io.use((socket, next) => {
+    auth(socket.request, {}, next)
+  })
+
+  io.on('connection', socket => chatApp(io, socket))
+
+  server.listen(port, () => {
     console.log(`Server is running on port: ${port}`)
   })
 }
