@@ -72,6 +72,7 @@ class AuthController {
       const hashedPassword = bcrypt.hashSync(password, 12)
       user = await User.create({ username, email, password: hashedPassword })
     } catch (error) {
+      console.log(error)
       if (error.original.code === 'ER_DUP_ENTRY') {
         if (error.fields.username) {
           throw new BadRequestError('username is duplicate')

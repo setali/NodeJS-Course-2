@@ -1,5 +1,10 @@
 import './config/loadEnv'
-import 'express-async-errors'
 import { bootstrap } from './app'
 
-bootstrap()
+bootstrap().then(server => {
+  const port = process.env.PORT
+
+  server.listen(port, () => {
+    console.log(`Server is running on port: ${port}`)
+  })
+})
